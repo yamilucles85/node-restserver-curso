@@ -19,7 +19,7 @@ let urlDB;
 if (process.env.NODE_ENV === 'dev') {
     urlDB = 'mongodb://localhost:27017/cafe';
 } else {
-    urlDB = 'mongodb://cafe-user:cafe-user@cluster0-h6yer.mongodb.net/cafe'; //'mongodb://yamilucles85:HESmpGLa0kzkeDzZ@cluster0-h6yer.mongodb.net/cafe';
+    urlDB = 'mongodb://yamilucles85:HESmpGLa0kzkeDzZ@cluster0-h6yer.mongodb.net/cafe'; //'mongodb://yamilucles85:HESmpGLa0kzkeDzZ@cluster0-h6yer.mongodb.net/cafe';
 }
 
 process.env.URLDB = urlDB;
