@@ -88,7 +88,7 @@ app.put('/usuario/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']); // Traemos sólo las propiedades o campos que queremos actualizar
 
-    Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, usuarioDB) => {
+    Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true, useFindAndModify: false }, (err, usuarioDB) => {
         if (err) {
             res.status(400).json({
                 ok: false,
@@ -98,7 +98,7 @@ app.put('/usuario/:id', (req, res) => {
 
         res.json({
             ok: true,
-            usuario: usuarioDBcls
+            usuario: usuarioDB
 
         });
     })

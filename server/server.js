@@ -14,7 +14,6 @@ app.use(bodyParser.json());
 
 app.use(require('./routes/usuario'));
 
-
 // Conectar a la db
 mongoose.connect(process.env.URLDB, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
     // mongoose.connect(process.env.URLDB,
