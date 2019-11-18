@@ -1,5 +1,7 @@
 const express = require('express');
 const Usuario = require('../models/usuario');
+
+const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion') // Usando destructuración
 const app = express();
 
 const bcrypt = require('bcrypt');
@@ -9,10 +11,8 @@ app.get('/', (req, res) => {
     res.json('Hola Mundo');
 });
 
-app.get('/usuario', (req, res) => {
+app.get('/usuario', verificaToken, (req, res) => {
     // res.json('get Usuario LOCAL');
-
-
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -25,7 +25,7 @@ app.get('/usuario', (req, res) => {
         .limit(limite)
         .exec((err, usuarios) => {
             if (err) {
-                res.status(400).json({
+                return res.status(400).json({
                     ok: false,
                     err
                 });
@@ -41,7 +41,7 @@ app.get('/usuario', (req, res) => {
         });
 });
 
-app.post('/usuario', (req, res) => {
+app.post('/usuario', [verificaToken, verificaAdmin_Role], (req, res) => {
     let body = req.body;
 
     let usuario = new Usuario({ // Crea nueva instancia del esquema Usuario.
@@ -67,30 +67,19 @@ app.post('/usuario', (req, res) => {
         res.json({
             ok: true,
             usuario: usuarioDB
-        })
+        });
 
     });
 
-    // if (body.nombre === undefined) {
-    //     res.status(400).json({
-    //         ok: false,
-    //         mensaje: 'El nombre es necesario'
-    //     });
-    // } else {
-    //     res.json({
-    //         persona: body
-    //     });
-    // }
-
 });
 
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']); // Traemos sólo las propiedades o campos que queremos actualizar
 
     Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true, useFindAndModify: false }, (err, usuarioDB) => {
         if (err) {
-            res.status(400).json({
+            return res.status(400).json({
                 ok: false,
                 err
             })
@@ -101,10 +90,10 @@ app.put('/usuario/:id', (req, res) => {
             usuario: usuarioDB
 
         });
-    })
+    });
 });
 
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
 
     let id = req.params.id;
     let cambiaEstado = {
