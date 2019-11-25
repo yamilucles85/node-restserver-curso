@@ -7,10 +7,6 @@ const app = express();
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
-app.get('/', (req, res) => {
-    res.json('Hola Mundo');
-});
-
 app.get('/usuario', verificaToken, (req, res) => {
     // res.json('get Usuario LOCAL');
 
