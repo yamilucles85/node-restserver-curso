@@ -24,7 +24,6 @@ let verificaToken = (req, res, next) => {
     });
 };
 
-
 // ==============================
 // Verificar AdminRole
 // ==============================
