@@ -95,7 +95,7 @@ app.post('/google', async(req, res) => {
             });
         };
 
-        // Validar si no se ha autenticado por Google y si existe el usuario ya
+        // Validar si no se ha autenticado por Google y si el usuario ya existe
         if (usuarioDB) {
             if (usuarioDB.google == false) {
                 return res.status(400).json({
@@ -123,7 +123,7 @@ app.post('/google', async(req, res) => {
             usuario.email = googleUser.email;
             usuario.img = googleUser.img;
             usuario.google = true;
-            usuario.password = ':)'; // Esto porque el Password es requerido
+            usuario.password = ':)'; // Esto porque el Password es requerido.
 
             usuario.save((err, usuarioDB) => {
                 if (err) {
@@ -142,7 +142,6 @@ app.post('/google', async(req, res) => {
                     usuario: usuarioDB,
                     token,
                 });
-
             });
         }
     });

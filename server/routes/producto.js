@@ -92,7 +92,6 @@ app.get('/productos', verificaToken, (req, res) => {
                 productos
             });
         });
-
 });
 
 //============================
